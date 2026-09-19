@@ -1,136 +1,151 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Warung Bijan</title>
+    
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <!-- html2canvas for Receipt Download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
     <!-- jsPDF for PDF Sales Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     
-<script>
-    tailwind.config = {
-        theme: {
-            extend: {
-                fontFamily: {
-                    sans: ['Inter', 'sans-serif'],
-                },
-                colors: {
-                    primary: '#3b82f6',
-                    secondary: '#10b981',
-                    danger: '#ef4444',
-                    background: '#f8fafc',
-                    surface: '#ffffff',
-                    textMain: '#1e293b',
-                    textMuted: '#64748b',
-                },
-                borderRadius: {
-                    'xl': '1rem',
-                    '2xl': '1.5rem',
-                    '3xl': '2rem',
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#10b981',
+                        danger: '#ef4444',
+                        background: '#f8fafc',
+                        surface: '#ffffff',
+                        textMain: '#1e293b',
+                        textMuted: '#64748b',
+                    },
+                    borderRadius: {
+                        'xl': '1rem',
+                        '2xl': '1.5rem',
+                        '3xl': '2rem',
+                    }
                 }
             }
         }
-    }
-</script>
-<style>
-    /* Custom styles to ensure light theme and rounded feel */
-    body, html {
-        background-color: #f8fafc;
-        color: #1e293b;
-        font-family: 'Inter', sans-serif;
-        margin: 0;
-        padding: 0;
-        height: 100vh; /* Fallback for older browsers */
-        height: 100dvh; /* Fixes the mobile URL bar cut-off issue */
-        width: 100vw;
-        overflow: hidden; /* Prevents whole-page overflow */
-    }
+    </script>
     
-    .transition-all {
-        transition-property: all;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        transition-duration: 300ms;
-    }
+    <style>
+        /* Custom styles to ensure light theme and rounded feel */
+        body, html {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Fallback for older browsers */
+            height: 100dvh; /* Fixes the mobile URL bar cut-off issue */
+            width: 100vw;
+            overflow: hidden; /* Prevents whole-page overflow */
+        }
+        
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 300ms;
+        }
 
-    .view-section {
-        display: none;
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-    }
-    .view-section.active {
-        display: flex;
-        flex-direction: column;
-    }
+        .view-section {
+            display: none;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .view-section.active {
+            display: flex;
+            flex-direction: column;
+        }
 
-    ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-        background: transparent; 
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #cbd5e1; 
-        border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8; 
-    }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
 
-    .pill-btn { border-radius: 9999px; }
-    .soft-card {
-        border-radius: 1.5rem;
-        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        background-color: white;
-    }
-    .circle-badge {
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+        .pill-btn { border-radius: 9999px; }
+        
+        .soft-card {
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            background-color: white;
+        }
+        
+        .circle-badge {
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    input:focus, select:focus, textarea:focus {
-        outline: none;
-        box-shadow: 0 0 0 2px #3b82f6;
-    }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #3b82f6;
+        }
 
-    #toast-container {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 9999;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    .toast {
-        background: white;
-        border-radius: 1rem;
-        padding: 1rem 1.5rem;
-        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-        transform: translateX(120%);
-        opacity: 0;
-        transition: all 0.3s ease-out;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-    .toast.show {
-        transform: translateX(0);
-        opacity: 1;
-    }
-</style>
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .toast {
+            background: white;
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            transform: translateX(120%);
+            opacity: 0;
+            transition: all 0.3s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
 
@@ -1579,7 +1594,10 @@
                     if(txDate.toDateString() === todayStr) { todayTotal += data.total; todayCount++; }
                 });
                 
-                transactions.sort((a,b) => (b.timestamp?.toMillis() || 0) - (a.timestamp?.toMillis() || 0));
+                // Safely get timestamp even if pending (null) or string format
+                const getTime = (t) => t ? (typeof t.toMillis === 'function' ? t.toMillis() : new Date(t).getTime()) : Date.now();
+                transactions.sort((a,b) => getTime(b.timestamp) - getTime(a.timestamp));
+                
                 window.renderTransactionsTable();
                 document.getElementById('stat-sales-today').innerText = formatRM(todayTotal);
                 document.getElementById('stat-tx-today').innerText = todayCount;
